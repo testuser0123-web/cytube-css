@@ -568,13 +568,6 @@ body {
 }
 
 /* Voting Buttons (less prominent) */
-#voteup, #voteskip {
-     box-shadow: none;
-     text-transform: none;
-     font-weight: normal;
-     padding: 6px 12px; /* Smaller padding */
-     margin-left: 5px; /* Space between them */
-}
 #voteup .glyphicon-thumbs-up { color: var(--md-secondary-light); }
 #voteskip .glyphicon-step-forward { color: var(--md-error); }
 
