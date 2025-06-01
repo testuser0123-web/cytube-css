@@ -1,4 +1,4 @@
-/* Material Design inspired CSS for CyTube - Revised (Vote Buttons Styled as Default) */
+/* Material Design inspired CSS for CyTube - Revised */
 
 /* --- CSS Variables for Color Palette --- */
 :root {
@@ -553,17 +553,13 @@ body {
 }
 .btn-default:hover,
 .btn-default:focus {
-    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover/focus effect */
+    background-color: rgba(var(--md-primary-dark), 0.1); /* Subtle hover/focus effect */
     color: var(--md-primary);
     box-shadow: var(--md-elevation-2); /* Higher elevation on hover/focus */
 }
 .btn-default:active {
-     background-color: rgba(255, 255, 255, 0.12); /* Even more prominent on active */
+     background-color: rgba(var(--md-primary-dark), 0.2); /* Even more prominent on active */
      box-shadow: var(--md-elevation-3);
-}
-/* Ensure default buttons have a consistent height */
-.btn-sm.btn-default {
-    height: 30px; /* Example height, adjust if needed to match Bootstrap standard */
 }
 
 
@@ -642,13 +638,22 @@ body {
      background-color: var(--md-primary-dark);
 }
 
-/* Container for video controls including vote buttons */
+/* Voting Buttons */
+/* Apply similar padding and remove extra margin for alignment */
+#voteup, #voteskip {
+     box-shadow: none;
+     text-transform: none;
+     font-weight: normal;
+     padding: 5px 10px; /* Match btn-sm padding */
+     margin-left: 0; /* Remove extra margin */
+}
+/* Add margin only between the vote buttons and the last btn-group */
 #videocontrols {
     display: flex;
     align-items: center;
     gap: 5px; /* Space between buttons/groups */
 }
-/* Add space between btn-group and first vote button */
+/* Space between btn-group and first vote button */
 #videocontrols .btn-group + #voteup,
 #videocontrols .btn-group + #voteskip {
     margin-left: 10px; /* Add space after the last button group */
@@ -806,8 +811,7 @@ body {
 
 .plcontrol-collapse .vertical-spacer {
      height: 15px; /* Standard spacing */
-     display: block;
-     flex-shrink: 0; /* Prevent spacer from shrinking */
+     display: block; /* Ensure it takes up space */
 }
 
 /* Search Input Group */
@@ -815,7 +819,7 @@ body {
      border-radius: 4px 0 0 4px; /* Rounded left */
 }
 #library_search.btn {
-    border-radius: 0 44px 4px 0; /* Rounded right */
+    border-radius: 0 4px 4px 0; /* Rounded right */
 }
 
 /* Add from URL Input Group */
