@@ -642,19 +642,6 @@ body {
      background-color: var(--md-primary-dark);
 }
 
-/* Voting Buttons (styled as default small buttons) */
-#voteup, #voteskip {
-    /* Revert to default btn-sm btn-default styling */
-    /* The flex container #videocontrols will handle alignment and spacing */
-    margin-left: 0; /* Remove specific margin */
-    padding: 5px 10px; /* Ensure btn-sm padding */
-    box-shadow: var(--md-elevation-1); /* Re-apply default button shadow */
-    text-transform: uppercase; /* Re-apply default button text transform */
-    font-weight: 500; /* Re-apply default button font-weight */
-    border-radius: 4px; /* Re-apply default button border-radius */
-    height: 30px; /* Ensure consistent height with other btn-sm */
-}
-
 /* Container for video controls including vote buttons */
 #videocontrols {
     display: flex;
