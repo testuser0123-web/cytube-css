@@ -1,3 +1,1070 @@
+/* Material Design inspired CSS for CyTube */
+
+/* --- CSS Variables for Color Palette --- */
+:root {
+    /* Dark Theme Colors */
+    --md-primary: #BB86FC; /* Light Purple for highlights */
+    --md-primary-dark: #3700B3; /* Dark Purple background/accents */
+    --md-secondary: #03DAC6; /* Teal for secondary actions */
+    --md-secondary-dark: #018786;
+    --md-background: #121212; /* Main background */
+    --md-surface: #1E1E1E; /* Card/Surface background */
+    --md-error: #CF6679; /* Error color */
+
+    --md-on-primary: #000000; /* Text color on primary */
+    --md-on-secondary: #000000; /* Text color on secondary */
+    --md-on-background: #E0E0E0; /* Text color on background */
+    --md-on-surface: #E0E0E0; /* Text color on surface */
+    --md-on-error: #000000; /* Text color on error */
+
+    --md-text-high-emphasis: rgba(255, 255, 255, 0.87);
+    --md-text-medium-emphasis: rgba(255, 255, 255, 0.60);
+    --md-text-disabled: rgba(255, 255, 255, 0.38);
+
+    --md-divider: rgba(255, 255, 255, 0.12); /* Dividers and borders */
+
+    /* Elevation Shadows (subtle in dark theme) */
+    --md-elevation-1: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12);
+    --md-elevation-2: 0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);
+    --md-elevation-3: 0px 1px 8px 0px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 3px 3px -2px rgba(0,0,0,0.12);
+
+    /* Consider adding a light theme palette as well if needed */
+}
+
+/* Optional: Include Roboto font (requires linking via <link> tag in HTML <head> or @import) */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'); */
+
+
+/* --- General Body and Layout --- */
 body {
-  background-color: red
+    background-color: var(--md-background);
+    color: var(--md-on-background);
+    font-family: 'Roboto', sans-serif, 'Arial', sans-serif; /* Use Roboto if available */
+    margin: 0;
+    padding-top: 50px; /* Space for the fixed-top navbar */
+}
+
+/* Reset #wrap padding and margin */
+#wrap {
+    margin: 0 auto;
+    padding: 0;
+    min-height: calc(100vh - 50px); /* Adjust min-height considering navbar */
+    display: flex;
+    flex-direction: column;
+}
+
+#mainpage {
+    flex: 1; /* Make main content fill available space */
+    padding: 15px 0; /* Add some vertical padding to the main content area */
+}
+
+/* Container padding adjustments */
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* --- Navbar --- */
+.navbar-inverse {
+    background-color: var(--md-surface); /* Use surface color */
+    border-color: transparent; /* No border */
+    box-shadow: var(--md-elevation-2); /* Add subtle shadow for elevation */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.navbar-inverse .navbar-brand {
+    color: var(--md-primary); /* Brand color */
+    font-weight: bold;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: var(--md-text-medium-emphasis); /* Default link color */
+    transition: color 0.2s ease-in-out;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: var(--md-text-high-emphasis); /* Highlight on hover */
+    background-color: transparent; /* No background change on hover */
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: transparent; /* No background change when open */
+    color: var(--md-text-high-emphasis);
+}
+
+.navbar-inverse .navbar-text {
+    color: var(--md-text-medium-emphasis); /* Text color in navbar */
+}
+
+.navbar-inverse .navbar-link {
+    color: var(--md-primary); /* Link color in navbar text */
+    text-decoration: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.navbar-inverse .navbar-link:hover {
+    color: var(--md-primary-light);
+    text-decoration: underline;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-divider);
+    box-shadow: var(--md-elevation-2);
+    border-radius: 4px;
+}
+
+.dropdown-menu > li > a {
+    color: var(--md-on-surface); /* Text color in dropdown */
+    padding: 10px 20px; /* Adjust padding */
+    transition: background-color 0.2s ease-in-out;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover background */
+    color: var(--md-on-surface);
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 9px 0;
+    overflow: hidden;
+    background-color: var(--md-divider); /* Divider color */
+}
+
+/* Navbar toggle button */
+.navbar-inverse .navbar-toggle {
+    border-color: var(--md-divider);
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: var(--md-on-surface); /* Icon color */
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover background */
+}
+
+
+/* --- Cards and Panels --- */
+/* Style .well, .modal-content, and main content wraps as cards */
+.well, .modal-content {
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+    box-shadow: var(--md-elevation-1);
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 15px; /* Add space between cards */
+    overflow: hidden; /* Ensure content stays within rounded corners */
+    padding: 0; /* Remove default padding inside card wrapper */
+}
+
+/* Apply card styling to main chat/video/playlist wraps */
+#chatwrap, #videowrap, #leftpane > .row > div, #rightpane > .row > div {
+    background-color: var(--md-surface);
+    box-shadow: var(--md-elevation-1);
+    border-radius: 8px;
+    margin-bottom: 15px; /* Space between wraps/cards */
+    overflow: hidden; /* Ensure content stays within rounded corners */
+    padding: 0; /* Remove default column padding */
+}
+
+/* Add back horizontal padding for content inside cards */
+#main .col-lg-5.col-md-5, #main .col-lg-7.col-md-7,
+#playlistrow .col-lg-5.col-md-5, #playlistrow .col-lg-7.col-md-7,
+#controlsrow .col-lg-5.col-md-5, #controlsrow .col-lg-7.col-md-7 {
+    padding: 0 10px; /* Add horizontal padding between columns */
+}
+
+/* Inner padding for content sections within cards */
+#motdwrap.well, /* Apply inner padding to MOTD well specifically */
+#chatheader,
+#videowrap-header,
+#leftcontrols,
+#rightcontrols,
+#plmeta_history,
+#plmeta,
+#userlist,
+#messagebuffer,
+.videolist, /* Padding for the playlist/history lists */
+#addfromurl > .vertical-spacer + div, /* Padding below vertical-spacer in collapsed sections */
+#addfromurl form,
+#addfromurl .checkbox,
+#addfromupload form,
+#addfromupload .vertical-spacer + div,
+#addfromupload .checkbox,
+#customembed > .vertical-spacer + div,
+#customembed form,
+#customembed .checkbox,
+#playlistmanager > .vertical-spacer + div,
+#playlistmanager form,
+#playlistmanager .checkbox,
+#queuefail > .vertical-spacer + div,
+#plonotification .alert {
+    padding: 10px 15px; /* Consistent inner padding */
+}
+
+
+/* Remove padding from the outer row wrappers */
+#motdrow, #announcements, #drinkbarwrap, #main, #controlsrow, #playlistrow, #resizewrap {
+     margin-left: -10px; /* Compensate for added column padding */
+     margin-right: -10px; /* Compensate for added column padding */
+}
+
+
+/* --- Chat Area --- */
+#chatheader {
+    background-color: var(--md-surface); /* Match card background */
+    border-bottom: 1px solid var(--md-divider);
+    font-weight: 500; /* Medium weight */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center;
+    justify-content: space-between;
+}
+
+#chatheader .pointer {
+    cursor: pointer;
+    color: var(--md-text-medium-emphasis);
+    transition: color 0.2s ease-in-out;
+}
+#chatheader .pointer:hover {
+    color: var(--md-text-high-emphasis);
+}
+
+#chatheader #usercount {
+    flex-grow: 1; /* Allow usercount to take space */
+    text-align: center;
+    font-size: 0.9em;
+    color: var(--md-text-medium-emphasis);
+}
+
+#chatheader .label {
+    margin-left: 5px;
+    background-color: var(--md-primary-dark); /* Use a color from the palette */
+    color: var(--md-on-primary);
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    font-weight: normal;
+    font-size: 75%;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: baseline;
+    display: inline; /* Ensure labels are inline */
+}
+
+#userlist, #messagebuffer {
+    border-top: none; /* No top border if header has bottom */
+    overflow-y: auto; /* Ensure scrolling */
+    background-color: var(--md-surface); /* Match card background */
+}
+
+#userlist {
+    border-right: 1px solid var(--md-divider); /* Separator between userlist and chat */
+}
+
+.linewrap {
+    padding: 5px 0; /* Padding for chat messages */
+    word-break: break-word; /* Prevent long words breaking layout */
+}
+
+/* Chat Message Styling */
+.timestamp {
+    color: var(--md-text-disabled);
+    font-size: 0.8em;
+    margin-right: 5px;
+    user-select: none; /* Prevent timestamp selection */
+}
+.username {
+    font-weight: bold;
+    margin-right: 5px;
+}
+/* Example: Custom user colors (can be set by JS based on rank) */
+.chat-msg-kasu strong.username { color: var(--md-primary-light); }
+.chat-msg-MMMG strong.username { color: var(--md-secondary-light); }
+.chat-msg-\$server\$ span {
+    color: var(--md-text-medium-emphasis);
+    font-style: italic;
+}
+.chat-msg-\$server\$.server-whisper span.server-whisper {
+    color: var(--md-text-medium-emphasis);
+}
+
+/* User list items */
+.userlist_item {
+    padding: 8px 0; /* Adjust padding */
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    border-bottom: 1px solid var(--md-divider); /* Divider between users */
+}
+.userlist_item:last-child { border-bottom: none; }
+
+.userlist_item:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle hover */
+}
+.userlist_item .userlist_owner {
+    color: var(--md-primary);
+    font-weight: bold;
+}
+.userlist_item.userlist_afk {
+    color: var(--md-text-disabled);
+    font-style: italic;
+}
+
+/* User Dropdown (Context Menu) */
+.userlist_item .user-dropdown {
+    background-color: var(--md-surface);
+    border: 1px solid var(--md-divider);
+    box-shadow: var(--md-elevation-2);
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    position: absolute; /* Needs position context from parent if not already set */
+    z-index: 1000; /* Ensure it's above other content */
+    width: auto; /* Adjust width */
+    min-width: 150px; /* Minimum width */
+}
+.userlist_item .user-dropdown strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--md-text-high-emphasis);
+}
+.userlist_item .btn-group-vertical .btn {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    background-color: var(--md-surface);
+    border-color: var(--md-divider);
+    color: var(--md-primary); /* Action color */
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: none; /* Remove button elevation */
+    text-transform: none; /* Normal text */
+    font-weight: normal;
+}
+.userlist_item .btn-group-vertical .btn:last-child { margin-bottom: 0; }
+.userlist_item .btn-group-vertical .btn:hover {
+    background-color: rgba(var(--md-primary-dark), 0.1);
+}
+
+/* Chat Input Area */
+#chatline {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-top: 1px solid var(--md-divider); /* Separator above input */
+    border-radius: 0 0 8px 8px; /* Match card border radius */
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+    resize: none;
+    box-shadow: none;
+    outline: none;
+    font-size: 1em;
+    line-height: 1.5;
+}
+#chatline::placeholder {
+    color: var(--md-text-disabled);
+}
+#chatline:focus {
+    border-color: var(--md-primary-light);
+    box-shadow: none;
+}
+
+/* Guest Login Input */
+.input-group#guestlogin {
+    padding: 15px; /* Padding for the whole group */
+    background-color: var(--md-surface);
+    border-top: 1px solid var(--md-divider);
+    border-radius: 0 0 8px 8px;
+}
+#guestlogin .input-group-addon {
+    background-color: var(--md-primary-dark);
+    color: var(--md-on-primary);
+    border: none;
+    border-radius: 4px 0 0 4px;
+}
+#guestlogin .form-control {
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+    border: 1px solid var(--md-divider);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+}
+#guestlogin .form-control:focus {
+    border-color: var(--md-primary-light);
+    box-shadow: none;
+}
+
+
+/* --- Video Player --- */
+#videowrap {
+    /* Card styling applied via general rule */
+}
+
+#videowrap-header {
+    background-color: var(--md-surface); /* Match card background */
+    border-bottom: 1px solid var(--md-divider);
+    font-weight: 500; /* Medium weight */
+    color: var(--md-on-surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#videowrap-header span {
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+}
+
+#videowrap-header .glyphicon {
+    margin-right: 5px;
+    cursor: pointer;
+    color: var(--md-text-medium-emphasis);
+    transition: color 0.2s ease-in-out;
+}
+#videowrap-header .glyphicon:hover {
+    color: var(--md-text-high-emphasis);
+}
+
+#currenttitle {
+    flex-grow: 1;
+    padding-right: 10px; /* Space before icons */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.embed-responsive {
+    margin-bottom: 0; /* Remove default Bootstrap margin */
+}
+
+
+/* --- Controls Area --- */
+#controlsrow {
+    margin-top: 0; /* Remove space above controls if wraps have margin-bottom */
+    margin-bottom: 15px;
+}
+
+#leftcontrols, #rightcontrols {
+    /* Padding applied via inner content rule */
+    display: flex; /* Use flexbox for button groups */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 5px; /* Space between buttons/groups */
+    align-items: center;
+}
+#rightcontrols {
+    justify-content: flex-end; /* Align right controls to the right */
+}
+
+/* Buttons */
+.btn {
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-weight: 500;
+    text-transform: uppercase;
+    box-shadow: var(--md-elevation-1); /* Add subtle elevation */
+    border: none;
+    padding: 8px 16px; /* Material button padding */
+}
+
+.btn-default {
+    background-color: var(--md-surface);
+    color: var(--md-primary); /* Use primary color for default actions */
+}
+.btn-default:hover,
+.btn-default:focus {
+    background-color: rgba(var(--md-primary-dark), 0.1); /* Subtle hover/focus effect */
+    color: var(--md-primary);
+    box-shadow: var(--md-elevation-2); /* Higher elevation on hover/focus */
+}
+.btn-default:active {
+     background-color: rgba(var(--md-primary-dark), 0.2); /* Even more prominent on active */
+     box-shadow: var(--md-elevation-3);
+}
+
+
+.btn-primary {
+    background-color: var(--md-primary);
+    color: var(--md-on-primary);
+}
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--md-primary-dark);
+    color: var(--md-on-primary);
+    box-shadow: var(--md-elevation-2);
+}
+.btn-primary:active {
+    background-color: var(--md-primary-dark);
+     box-shadow: var(--md-elevation-3);
+}
+
+
+.btn-success {
+    background-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+}
+.btn-success:hover,
+.btn-success:focus {
+    background-color: var(--md-secondary-dark);
+    color: var(--md-on-secondary);
+    box-shadow: var(--md-elevation-2);
+}
+.btn-success:active {
+     background-color: var(--md-secondary-dark);
+      box-shadow: var(--md-elevation-3);
+}
+
+.btn-danger {
+    background-color: var(--md-error);
+    color: var(--md-on-error);
+}
+.btn-danger:hover,
+.btn-danger:focus {
+    background-color: #B00020; /* Slightly darker red */
+    color: var(--md-on-error);
+    box-shadow: var(--md-elevation-2);
+}
+.btn-danger:active {
+     background-color: #8B0000; /* Even darker red */
+      box-shadow: var(--md-elevation-3);
+}
+
+
+/* Button Groups */
+.btn-group .btn {
+    margin-right: 0; /* Reset margin for groups */
+    border-radius: 0; /* Make grouped buttons squared */
+    box-shadow: none; /* Remove individual elevation in groups */
+}
+.btn-group .btn:first-child { border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+.btn-group .btn:last-child { border-top-right-radius: 4px; border-bottom-right-radius: 4px; }
+.btn-group .btn:not(:first-child):not(:last-child) { border-radius: 0; }
+
+/* Add subtle border between grouped buttons */
+.btn-group .btn + .btn,
+.btn-group .btn + .btn-group,
+.btn-group .btn-group + .btn,
+.btn-group .btn-group + .btn-group {
+    margin-left: 1px;
+}
+
+/* Active button in group */
+.btn-group .btn.active {
+    background-color: var(--md-primary); /* Highlight active button */
+    color: var(--md-on-primary);
+    box-shadow: none; /* No elevation when active in group */
+}
+.btn-group .btn.active:hover {
+     background-color: var(--md-primary-dark);
+}
+
+/* Voting Buttons (less prominent) */
+#voteup, #voteskip {
+     box-shadow: none;
+     text-transform: none;
+     font-weight: normal;
+     padding: 6px 12px; /* Smaller padding */
+     margin-left: 5px; /* Space between them */
+}
+#voteup .glyphicon-thumbs-up { color: var(--md-secondary-light); }
+#voteskip .glyphicon-step-forward { color: var(--md-error); }
+
+
+/* --- Playlist and History Lists --- */
+#leftpane-inner > div, #rightpane-inner > div {
+     /* Card styling applied via general rule */
+     padding: 0; /* Remove inner padding from the wrapper div */
+}
+
+/* Headers for lists */
+#plmeta_history, #plmeta {
+    border-bottom: 1px solid var(--md-divider);
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px; /* Inner padding */
+}
+#plmeta span:first-child { flex-grow: 1; } /* Allow title to take space */
+
+#plcount, #pllength {
+    font-weight: normal;
+    font-size: 0.9em;
+    color: var(--md-text-medium-emphasis);
+    margin-left: 10px;
+}
+
+
+/* List container scrolls */
+.videolist {
+    list-style: none;
+    padding: 0 15px; /* Inner horizontal padding */
+    margin: 0;
+    max-height: 400px; /* Example max height, adjust as needed */
+    overflow-y: auto;
+}
+
+/* List items */
+.queue_entry, .history_entry {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--md-divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s ease-in-out;
+}
+.queue_entry:last-child, .history_entry:last-child {
+    border-bottom: none;
+}
+
+.queue_entry:hover, .history_entry:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Subtle hover */
+}
+
+.qe_title {
+    color: var(--md-on-surface);
+    text-decoration: none;
+    flex-grow: 1;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.qe_title:hover {
+    text-decoration: underline;
+    color: var(--md-primary-light);
+}
+
+.qe_time {
+    font-size: 0.9em;
+    color: var(--md-text-medium-emphasis);
+    margin-left: 10px;
+}
+
+/* Buttons within list items */
+.queue_entry .btn-group,
+.history_entry .btn-group {
+     display: flex; /* Use flexbox for buttons in group */
+     gap: 5px; /* Space between buttons */
+}
+
+.queue_entry .btn-group .btn,
+.history_entry .btn-group .btn {
+    padding: 3px 8px; /* Smaller padding */
+    box-shadow: none;
+    text-transform: none;
+    font-weight: normal;
+    border-radius: 4px; /* Rounded corners for individual buttons in list */
+}
+
+/* Active playlist item */
+.queue_entry.queue_active {
+    background-color: rgba(var(--md-primary-dark), 0.1); /* Highlight active item */
+}
+
+
+/* Collapsible Sections (Search, Add URL, etc.) */
+.plcontrol-collapse {
+    /* Card styling applied via general rule */
+     padding: 0; /* Remove column padding */
+}
+
+/* Add padding to the content *inside* the collapsed section */
+.plcontrol-collapse > div:not(.vertical-spacer),
+.plcontrol-collapse > form {
+    padding: 15px;
+}
+
+.plcontrol-collapse .vertical-spacer {
+     height: 15px; /* Standard spacing */
+     display: block; /* Ensure it takes up space */
+}
+
+.plcontrol-collapse .input-group {
+    margin-bottom: 10px; /* Space below input groups */
+}
+
+.plcontrol-collapse .checkbox {
+     margin-top: 0; /* Adjust spacing */
+}
+
+/* Search Input Group */
+#library_query.form-control {
+     border-radius: 4px 0 0 4px; /* Rounded left */
+}
+#library_search.btn {
+    border-radius: 0 4px 4px 0; /* Rounded right */
+}
+
+/* Add from URL Input Group */
+#mediaurl.form-control {
+    border-radius: 4px 0 0 4px; /* Rounded left */
+}
+#stime.form-control {
+    border-radius: 0; /* Squared */
+    width: 92px; /* Keep original width */
+}
+#queue_next.btn {
+     border-radius: 0; /* Squared */
+     margin-left: -1px; /* Overlap border */
+}
+#queue_end.btn {
+    border-radius: 0 4px 4px 0; /* Rounded right */
+    margin-left: -1px; /* Overlap border */
+}
+
+/* Upload Input Group */
+#mediauploadform .input-group {
+     margin-bottom: 10px;
+}
+#mediaupload.form-control {
+     border-radius: 4px 0 0 4px; /* Rounded left */
+}
+#up_queue_next.btn, #up_queue_end.btn {
+    border-radius: 0 4px 4px 0; /* Rounded right, assuming only one button */
+     margin-left: -1px;
+}
+#mediauptitle.form-control {
+     border-radius: 4px; /* Fully rounded */
+}
+
+
+/* Progress bar */
+.progress {
+    height: 8px;
+    margin-bottom: 15px;
+    background-color: rgba(var(--md-primary-dark), 0.3);
+    border-radius: 4px;
+    box-shadow: none;
+    overflow: hidden;
+}
+.progress-bar {
+    background-color: var(--md-primary);
+    box-shadow: none;
+    transition: width 0.6s ease;
+}
+
+/* Playlist notification alert */
+#plonotification .alert {
+    background-color: rgba(var(--md-secondary), 0.1); /* Secondary-based background */
+    color: var(--md-on-surface);
+    border: 1px solid var(--md-secondary);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: var(--md-elevation-1);
+}
+#plonotification .alert strong {
+    color: var(--md-secondary-light);
+}
+#plonotification .alert .btn-primary {
+    background-color: var(--md-secondary);
+    border-color: var(--md-secondary);
+    color: var(--md-on-secondary);
+     text-transform: uppercase;
+     font-weight: 500;
+}
+#plonotification .alert .btn-primary:hover {
+     background-color: var(--md-secondary-dark);
+      border-color: var(--md-secondary-dark);
+}
+
+
+/* --- Modals (User Options, Channel Settings, Emote List) --- */
+.modal-content {
+    /* Card styling applied via general rule */
+    border-radius: 8px;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--md-divider);
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+    padding: 15px;
+    position: relative; /* Needed for tabs absolute positioning if any */
+}
+
+.modal-header h4 {
+    margin: 0;
+    color: var(--md-text-high-emphasis);
+}
+
+.modal-header .close {
+    color: var(--md-text-medium-emphasis);
+    opacity: 1;
+    font-size: 1.5em;
+    line-height: 1;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    z-index: 10;
+}
+.modal-header .close:hover {
+    color: var(--md-text-high-emphasis);
+    opacity: 1;
+}
+
+
+.modal-body {
+    padding: 15px;
+    background-color: var(--md-surface);
+    color: var(--md-on-surface);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--md-divider);
+    background-color: var(--md-surface);
+    padding: 15px;
+    text-align: right;
+}
+
+/* Modal Tabs */
+.modal-header .nav-tabs {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-top: 15px; /* Space between title and tabs */
+}
+
+.modal-header .nav-tabs > li > a {
+    border: none !important;
+    background-color: transparent !important;
+    color: var(--md-text-medium-emphasis) !important;
+    margin-right: 0 !important;
+    padding: 10px 15px !important;
+    border-radius: 0 !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.modal-header .nav-tabs > li > a:hover {
+    color: var(--md-text-high-emphasis) !important;
+}
+
+.modal-header .nav-tabs > li.active > a,
+.modal-header .nav-tabs > li.active > a:hover,
+.modal-header .nav-tabs > li.active > a:focus {
+    color: var(--md-primary) !important;
+    border-bottom: 2px solid var(--md-primary) !important;
+    background-color: transparent !important;
+}
+
+/* Tab Content */
+.modal-body .tab-content > .tab-pane {
+    padding-top: 15px;
+    border-top: 1px solid var(--md-divider); /* Add a separator below tabs */
+    margin-top: -1px; /* Overlap with tab border */
+}
+.modal-body .tab-content > .tab-pane h4 {
+     color: var(--md-text-high-emphasis);
+     margin-bottom: 15px;
+}
+
+/* Forms in Modals */
+.modal-body .form-horizontal .form-group {
+     margin-left: 0;
+     margin-right: 0;
+     padding-bottom: 10px; /* Space between form groups */
+     border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+}
+.modal-body .form-horizontal .form-group:last-child {
+     border-bottom: none;
+     padding-bottom: 0;
+}
+.modal-body .form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right !important;
+    color: var(--md-text-medium-emphasis);
+}
+.modal-body .form-horizontal .checkbox label {
+     color: var(--md-on-surface);
+}
+.modal-body .form-control {
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly different input background */
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--md-on-surface);
+}
+.modal-body .form-control:focus {
+    border-color: var(--md-primary-light);
+    box-shadow: none;
+}
+.modal-body .text-info { color: var(--md-secondary-light); }
+.modal-body .text-danger { color: var(--md-error); }
+
+
+/* Tables in Modals */
+.modal-body table.table {
+    background-color: var(--md-surface);
+    box-shadow: none; /* Remove elevation from tables inside cards */
+    border-radius: 0;
+    margin-bottom: 15px;
+    border-spacing: 0; /* Ensure no space between cells */
+    border-collapse: collapse;
+}
+.modal-body table.table th,
+.modal-body table.table td {
+     border-top: 1px solid var(--md-divider);
+     color: var(--md-on-surface);
+     padding: 10px;
+     text-align: left;
+}
+.modal-body table.table th {
+     font-weight: 500;
+     color: var(--md-text-high-emphasis);
+     border-bottom: 2px solid var(--md-primary-light);
+     border-top: none; /* Remove top border from header */
+}
+.modal-body table.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.03); /* Subtle stripe */
+}
+.modal-body table.table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle row hover */
+}
+
+/* Banlist table */
+#cs-banlist table.table th:first-child,
+#cs-banlist table.table td:first-child {
+    width: 1px; /* Collapse width for the button column */
+    white-space: nowrap;
+}
+#cs-banlist .btn-xs {
+     padding: 1px 5px;
+     font-size: 12px;
+     line-height: 1.5;
+     border-radius: 3px;
+     box-shadow: none;
+     text-transform: none;
+}
+
+/* Channel log pre */
+#cs-chanlog-text {
+    background-color: rgba(0, 0, 0, 0.2); /* Dark background for code/log */
+    color: var(--md-text-medium-emphasis);
+    border: 1px solid var(--md-divider);
+    border-radius: 4px;
+    padding: 10px;
+    max-height: 400px; /* Limit log height */
+    overflow: auto;
+    white-space: pre-wrap; /* Wrap long lines */
+    word-break: break-all; /* Break words if necessary */
+}
+
+/* Emote List Modal Table */
+.emotelist-table {
+     width: 100%;
+     border-collapse: collapse;
+     margin-bottom: 15px;
+}
+.emotelist-table th, .emotelist-table td {
+     border-top: 1px solid var(--md-divider);
+     padding: 8px;
+     text-align: left;
+}
+.emotelist-table th {
+    font-weight: 500;
+    color: var(--md-text-high-emphasis);
+     border-bottom: 2px solid var(--md-primary-light);
+     border-top: none;
+}
+.emotelist-table td:first-child {
+     width: 1px; /* Delete button column */
+     white-space: nowrap;
+}
+.emotelist-table td:last-child img {
+     max-height: 40px; /* Limit emote image size */
+     vertical-align: middle;
+}
+.emotelist-table tbody tr:hover {
+     background-color: rgba(255, 255, 255, 0.05);
+}
+.emotelist-table .btn-danger {
+     padding: 3px 8px;
+     text-transform: none;
+     font-weight: normal;
+     box-shadow: none;
+}
+
+
+/* Permission Selects */
+#cs-permedit select.form-control {
+     background-color: rgba(255, 255, 255, 0.05);
+     border-color: rgba(255, 255, 255, 0.1);
+     color: var(--md-on-surface);
+}
+#cs-permedit select.form-control:focus {
+     border-color: var(--md-primary-light);
+}
+#cs-permedit hr {
+     border-top: 1px solid var(--md-divider);
+     margin-top: 20px;
+     margin-bottom: 20px;
+}
+
+
+/* --- Footer --- */
+#footer {
+    margin-top: 20px;
+    padding: 20px 0;
+    background-color: var(--md-surface);
+    color: var(--md-text-medium-emphasis);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); /* Optional: inset shadow */
+    text-align: center;
+}
+
+#footer a {
+    color: var(--md-primary-light); /* Link color */
+    text-decoration: none;
+    margin: 0 5px;
+    transition: color 0.2s ease-in-out;
+}
+
+#footer a:hover {
+    color: var(--md-primary);
+    text-decoration: underline;
+}
+
+#footer .credit {
+    margin: 0;
+}
+
+/* --- Utility and Misc --- */
+.clear {
+    clear: both; /* Ensure floats are cleared */
+}
+
+.vertical-spacer {
+     height: 15px; /* Consistent spacing */
+     display: block;
+}
+
+/* Custom Scrollbar Style (Optional) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--md-background); /* Track matches body background */
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--md-primary-dark); /* Thumb matches primary dark */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--md-primary); /* Thumb hover matches primary */
+}
+
+/* Ensure collapsed content is visible when 'in' */
+.collapse.in {
+    display: block !important;
+    height: auto !important;
+    visibility: visible !important;
 }
