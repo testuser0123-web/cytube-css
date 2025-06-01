@@ -1,13 +1,11 @@
-/* Material Design inspired CSS for CyTube - Revised */
+/* Material Design inspired CSS for CyTube */
 
 /* --- CSS Variables for Color Palette --- */
 :root {
     /* Dark Theme Colors */
     --md-primary: #BB86FC; /* Light Purple for highlights */
-    --md-primary-light: #E1BEE7; /* Lighter primary for subtle highlights */
     --md-primary-dark: #3700B3; /* Dark Purple background/accents */
     --md-secondary: #03DAC6; /* Teal for secondary actions */
-    --md-secondary-light: #80CBC4; /* Lighter secondary */
     --md-secondary-dark: #018786;
     --md-background: #121212; /* Main background */
     --md-surface: #1E1E1E; /* Card/Surface background */
@@ -44,51 +42,27 @@ body {
     font-family: 'Roboto', sans-serif, 'Arial', sans-serif; /* Use Roboto if available */
     margin: 0;
     padding-top: 50px; /* Space for the fixed-top navbar */
-    min-height: 100vh; /* Ensure body takes at least full viewport height */
-    display: flex;
-    flex-direction: column; /* Allow footer to be pushed to the bottom */
 }
 
+/* Reset #wrap padding and margin */
 #wrap {
     margin: 0 auto;
     padding: 0;
-    flex: 1; /* Make #wrap fill remaining space */
+    min-height: calc(100vh - 50px); /* Adjust min-height considering navbar */
     display: flex;
     flex-direction: column;
 }
 
 #mainpage {
-    flex: 1; /* Make main content fill available space within wrap */
+    flex: 1; /* Make main content fill available space */
     padding: 15px 0; /* Add some vertical padding to the main content area */
-    display: flex;
-    flex-direction: column;
 }
-
-/* Adjust row margins to account for column padding */
-/* Note: This might need further tuning based on specific Bootstrap theme */
-.row {
-     margin-left: -10px;
-     margin-right: -10px;
-}
-
-/* Apply inner horizontal padding to the content *within* columns */
-/* This creates space between columns */
-.col-lg-12.col-md-12, /* For full width columns */
-#main .col-lg-5.col-md-5, #main .col-lg-7.col-md-7,
-#playlistrow .col-lg-5.col-md-5, #playlistrow .col-lg-7.col-md-7,
-#controlsrow .col-lg-5.col-md-5, #controlsrow .col-lg-7.col-md-7,
-#resizewrap .col-lg-5.col-md-5, #resizewrap .col-lg-7.col-md-7 {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
 
 /* Container padding adjustments */
 .container-fluid {
-    padding-right: 0; /* Remove default container padding */
-    padding-left: 0;  /* Remove default container padding */
+    padding-right: 15px;
+    padding-left: 15px;
 }
-
 
 /* --- Navbar --- */
 .navbar-inverse {
@@ -96,7 +70,6 @@ body {
     border-color: transparent; /* No border */
     box-shadow: var(--md-elevation-2); /* Add subtle shadow for elevation */
     transition: box-shadow 0.3s ease-in-out;
-    margin-bottom: 0; /* Remove default navbar margin */
 }
 
 .navbar-inverse .navbar-brand {
@@ -206,45 +179,50 @@ body {
     padding: 0; /* Remove default column padding */
 }
 
-/* Add back horizontal padding for content sections within cards */
+/* Add back horizontal padding for content inside cards */
+#main .col-lg-5.col-md-5, #main .col-lg-7.col-md-7,
+#playlistrow .col-lg-5.col-md-5, #playlistrow .col-lg-7.col-md-7,
+#controlsrow .col-lg-5.col-md-5, #controlsrow .col-lg-7.col-md-7 {
+    padding: 0 10px; /* Add horizontal padding between columns */
+}
+
+/* Inner padding for content sections within cards */
+#motdwrap.well, /* Apply inner padding to MOTD well specifically */
 #chatheader,
 #videowrap-header,
 #leftcontrols,
 #rightcontrols,
 #plmeta_history,
 #plmeta,
+#userlist,
+#messagebuffer,
 .videolist, /* Padding for the playlist/history lists */
-#addfromurl > div:not(.vertical-spacer), /* Padding below vertical-spacer in collapsed sections */
+#addfromurl > .vertical-spacer + div, /* Padding below vertical-spacer in collapsed sections */
 #addfromurl form,
-#addfromupload > div:not(.vertical-spacer),
+#addfromurl .checkbox,
 #addfromupload form,
-#customembed > div:not(.vertical-spacer),
+#addfromupload .vertical-spacer + div,
+#addfromupload .checkbox,
+#customembed > .vertical-spacer + div,
 #customembed form,
-#playlistmanager > div:not(.vertical-spacer),
+#customembed .checkbox,
+#playlistmanager > .vertical-spacer + div,
 #playlistmanager form,
-#queuefail > div:not(.vertical-spacer),
+#playlistmanager .checkbox,
+#queuefail > .vertical-spacer + div,
 #plonotification .alert {
     padding: 10px 15px; /* Consistent inner padding */
 }
 
-/* Special padding for the search library results */
-#library {
-    padding: 0 15px; /* Only vertical padding handled by list item */
-}
 
-/* Chat input form padding */
-#chatwrap > form {
-    padding: 0 15px 15px 15px; /* Padding at the bottom */
+/* Remove padding from the outer row wrappers */
+#motdrow, #announcements, #drinkbarwrap, #main, #controlsrow, #playlistrow, #resizewrap {
+     margin-left: -10px; /* Compensate for added column padding */
+     margin-right: -10px; /* Compensate for added column padding */
 }
 
 
 /* --- Chat Area --- */
-#chatwrap {
-    display: flex; /* Use flexbox for layout */
-    flex-direction: column; /* Stack header, list, buffer, input vertically */
-    height: 100%; /* Allow chatwrap to take available height in the column */
-}
-
 #chatheader {
     background-color: var(--md-surface); /* Match card background */
     border-bottom: 1px solid var(--md-divider);
@@ -252,7 +230,6 @@ body {
     display: flex; /* Use flexbox for alignment */
     align-items: center;
     justify-content: space-between;
-    flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 #chatheader .pointer {
@@ -282,30 +259,18 @@ body {
     line-height: 1;
     white-space: nowrap;
     vertical-align: baseline;
-    display: inline-block; /* Ensure labels are inline-block for margin */
+    display: inline; /* Ensure labels are inline */
 }
 
-/* Remove fixed height and make them flex items */
 #userlist, #messagebuffer {
     border-top: none; /* No top border if header has bottom */
     overflow-y: auto; /* Ensure scrolling */
     background-color: var(--md-surface); /* Match card background */
-    flex-grow: 1; /* Allow both userlist and messagebuffer to grow */
-    min-height: 50px; /* Ensure a minimum height */
-    height: auto !important; /* Override inline style */
-    display: flex; /* Use flexbox internally for items */
-    flex-direction: column;
 }
 
 #userlist {
     border-right: 1px solid var(--md-divider); /* Separator between userlist and chat */
-    flex-basis: 150px; /* Give userlist a flexible basis */
-    flex-shrink: 0; /* Don't let userlist shrink excessively */
 }
-#messagebuffer {
-    flex-basis: 200px; /* Give messagebuffer a flexible basis */
-}
-
 
 .linewrap {
     padding: 5px 0; /* Padding for chat messages */
@@ -336,13 +301,10 @@ body {
 
 /* User list items */
 .userlist_item {
-    padding: 8px 15px; /* Adjust padding to match card padding */
+    padding: 8px 0; /* Adjust padding */
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     border-bottom: 1px solid var(--md-divider); /* Divider between users */
-    display: flex; /* Use flexbox for item content */
-    align-items: center;
-    position: relative; /* Needed for absolute dropdown */
 }
 .userlist_item:last-child { border-bottom: none; }
 
@@ -352,17 +314,11 @@ body {
 .userlist_item .userlist_owner {
     color: var(--md-primary);
     font-weight: bold;
-    flex-grow: 1; /* Allow name to take space */
 }
 .userlist_item.userlist_afk {
     color: var(--md-text-disabled);
     font-style: italic;
 }
-.userlist_item .glyphicon { /* Style for icons like AFK */
-    margin-right: 5px;
-    color: var(--md-text-disabled);
-}
-
 
 /* User Dropdown (Context Menu) */
 .userlist_item .user-dropdown {
@@ -372,12 +328,10 @@ body {
     padding: 10px;
     border-radius: 4px;
     margin-top: 5px;
-    position: absolute;
-    z-index: 1000;
-    width: auto;
-    min-width: 150px;
-    top: 100%; /* Position below the user item */
-    left: 0; /* Align to the left */
+    position: absolute; /* Needs position context from parent if not already set */
+    z-index: 1000; /* Ensure it's above other content */
+    width: auto; /* Adjust width */
+    min-width: 150px; /* Minimum width */
 }
 .userlist_item .user-dropdown strong {
     display: block;
@@ -402,22 +356,19 @@ body {
 }
 
 /* Chat Input Area */
-/* Remove padding from the textarea itself, apply to parent form */
 #chatline {
     width: 100%;
-    padding: 10px; /* Keep some internal padding */
+    padding: 10px 15px;
     border: none;
     border-top: 1px solid var(--md-divider); /* Separator above input */
     border-radius: 0 0 8px 8px; /* Match card border radius */
     background-color: var(--md-surface);
     color: var(--md-on-surface);
-    resize: vertical; /* Allow vertical resize */
-    min-height: 38px; /* Keep original min-height */
+    resize: none;
     box-shadow: none;
     outline: none;
     font-size: 1em;
     line-height: 1.5;
-    flex-shrink: 0; /* Prevent input from shrinking */
 }
 #chatline::placeholder {
     color: var(--md-text-disabled);
@@ -433,7 +384,6 @@ body {
     background-color: var(--md-surface);
     border-top: 1px solid var(--md-divider);
     border-radius: 0 0 8px 8px;
-    flex-shrink: 0; /* Prevent guest login from shrinking */
 }
 #guestlogin .input-group-addon {
     background-color: var(--md-primary-dark);
@@ -457,8 +407,6 @@ body {
 /* --- Video Player --- */
 #videowrap {
     /* Card styling applied via general rule */
-    display: flex;
-    flex-direction: column;
 }
 
 #videowrap-header {
@@ -469,7 +417,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 #videowrap-header span {
@@ -497,34 +444,21 @@ body {
 
 .embed-responsive {
     margin-bottom: 0; /* Remove default Bootstrap margin */
-    flex-grow: 1; /* Allow video player to take available space */
 }
-.embed-responsive-item {
-     width: 100%;
-     height: 100%;
-}
+
 
 /* --- Controls Area --- */
 #controlsrow {
     margin-top: 0; /* Remove space above controls if wraps have margin-bottom */
     margin-bottom: 15px;
-    display: flex; /* Make controlsrow a flex container */
-    align-items: flex-start; /* Align items to the top */
-    flex-wrap: wrap; /* Allow items to wrap */
 }
-#controlsrow > [class*="col-"] {
-     /* Reset Bootstrap column flex properties if needed, depends on Bootstrap version/theme */
-     /* flex-basis: auto; flex-grow: 0; flex-shrink: 0; */
-}
-
 
 #leftcontrols, #rightcontrols {
     /* Padding applied via inner content rule */
     display: flex; /* Use flexbox for button groups */
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
     gap: 5px; /* Space between buttons/groups */
-    align-items: center; /* Vertically align buttons */
-    height: 100%; /* Ensure height matches other columns in the row */
+    align-items: center;
 }
 #rightcontrols {
     justify-content: flex-end; /* Align right controls to the right */
@@ -539,13 +473,7 @@ body {
     box-shadow: var(--md-elevation-1); /* Add subtle elevation */
     border: none;
     padding: 8px 16px; /* Material button padding */
-    height: auto; /* Allow height to be determined by content/flex */
 }
-
-.btn-sm {
-    padding: 5px 10px; /* Standard Bootstrap small button padding */
-}
-
 
 .btn-default {
     background-color: var(--md-surface);
@@ -638,46 +566,22 @@ body {
      background-color: var(--md-primary-dark);
 }
 
-/* Voting Buttons */
-/* Apply similar padding and remove extra margin for alignment */
+/* Voting Buttons (less prominent) */
 #voteup, #voteskip {
      box-shadow: none;
      text-transform: none;
      font-weight: normal;
-     padding: 5px 10px; /* Match btn-sm padding */
-     margin-left: 0; /* Remove extra margin */
+     padding: 6px 12px; /* Smaller padding */
+     margin-left: 5px; /* Space between them */
 }
-/* Add margin only between the vote buttons and the last btn-group */
-#videocontrols {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Space between buttons/groups */
-}
-/* Space between btn-group and first vote button */
-#videocontrols .btn-group + #voteup,
-#videocontrols .btn-group + #voteskip {
-    margin-left: 10px; /* Add space after the last button group */
-}
-
-
 #voteup .glyphicon-thumbs-up { color: var(--md-secondary-light); }
 #voteskip .glyphicon-step-forward { color: var(--md-error); }
 
 
 /* --- Playlist and History Lists --- */
-#leftpane-inner, #rightpane-inner {
+#leftpane-inner > div, #rightpane-inner > div {
      /* Card styling applied via general rule */
      padding: 0; /* Remove inner padding from the wrapper div */
-     display: flex; /* Use flexbox */
-     flex-direction: column; /* Stack sections vertically */
-     height: 100%; /* Ensure inner takes available height */
-}
-#leftpane > .row > div, #rightpane > .row > div {
-     /* This selects the collapsed/in divs within the panes */
-     padding: 0; /* Remove padding, inner content adds padding */
-     flex-grow: 1; /* Allow content sections to grow */
-     display: flex; /* Make inner section a flex container */
-     flex-direction: column; /* Stack content (header, list, etc.) vertically */
 }
 
 /* Headers for lists */
@@ -688,7 +592,6 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px; /* Inner padding */
-    flex-shrink: 0; /* Prevent headers from shrinking */
 }
 #plmeta span:first-child { flex-grow: 1; } /* Allow title to take space */
 
@@ -705,11 +608,8 @@ body {
     list-style: none;
     padding: 0 15px; /* Inner horizontal padding */
     margin: 0;
-    /* Remove fixed/max height */
-    max-height: none; /* Override max-height */
-    height: auto;
+    max-height: 400px; /* Example max height, adjust as needed */
     overflow-y: auto;
-    flex-grow: 1; /* Allow lists to grow and fill space */
 }
 
 /* List items */
@@ -747,7 +647,6 @@ body {
     font-size: 0.9em;
     color: var(--md-text-medium-emphasis);
     margin-left: 10px;
-    flex-shrink: 0; /* Prevent time from shrinking */
 }
 
 /* Buttons within list items */
@@ -755,8 +654,6 @@ body {
 .history_entry .btn-group {
      display: flex; /* Use flexbox for buttons in group */
      gap: 5px; /* Space between buttons */
-     flex-shrink: 0; /* Prevent buttons from shrinking */
-     margin-left: 10px; /* Space from title/time */
 }
 
 .queue_entry .btn-group .btn,
@@ -778,40 +675,25 @@ body {
 .plcontrol-collapse {
     /* Card styling applied via general rule */
      padding: 0; /* Remove column padding */
-     flex-shrink: 0; /* Prevent collapsed sections from shrinking when active */
 }
 
 /* Add padding to the content *inside* the collapsed section */
-/* This rule is updated to apply padding to all direct children except vertical-spacer */
-.plcontrol-collapse > *:not(.vertical-spacer) {
-    padding: 10px 15px;
+.plcontrol-collapse > div:not(.vertical-spacer),
+.plcontrol-collapse > form {
+    padding: 15px;
 }
-/* Adjust padding for elements that are directly within the collapse but need different spacing */
-.plcontrol-collapse .input-group,
-.plcontrol-collapse .checkbox,
-.plcontrol-collapse textarea,
-.plcontrol-collapse p,
-.plcontrol-collapse table {
-     margin-bottom: 15px; /* Add spacing below form elements */
-}
-.plcontrol-collapse .input-group:last-child,
-.plcontrol-collapse .checkbox:last-child,
-.plcontrol-collapse textarea:last-child,
-.plcontrol-collapse p:last-child,
-.plcontrol-collapse table:last-child {
-     margin-bottom: 0;
-}
-.plcontrol-collapse form {
-     padding-bottom: 0; /* Remove bottom padding from form, children add margin */
-}
-.plcontrol-collapse .btn-group {
-     margin-top: 10px; /* Space above buttons */
-}
-
 
 .plcontrol-collapse .vertical-spacer {
      height: 15px; /* Standard spacing */
      display: block; /* Ensure it takes up space */
+}
+
+.plcontrol-collapse .input-group {
+    margin-bottom: 10px; /* Space below input groups */
+}
+
+.plcontrol-collapse .checkbox {
+     margin-top: 0; /* Adjust spacing */
 }
 
 /* Search Input Group */
@@ -889,7 +771,6 @@ body {
     color: var(--md-on-secondary);
      text-transform: uppercase;
      font-weight: 500;
-     box-shadow: var(--md-elevation-1);
 }
 #plonotification .alert .btn-primary:hover {
      background-color: var(--md-secondary-dark);
@@ -1109,14 +990,6 @@ body {
      font-weight: normal;
      box-shadow: none;
 }
-.emotelist-search.form-control {
-    border-radius: 4px; /* Fully rounded */
-}
-.emotelist-paginator-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    text-align: center;
-}
 
 
 /* Permission Selects */
@@ -1143,7 +1016,6 @@ body {
     color: var(--md-text-medium-emphasis);
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); /* Optional: inset shadow */
     text-align: center;
-    flex-shrink: 0; /* Prevent footer from shrinking */
 }
 
 #footer a {
@@ -1170,7 +1042,6 @@ body {
 .vertical-spacer {
      height: 15px; /* Consistent spacing */
      display: block;
-     flex-shrink: 0; /* Prevent spacer from shrinking */
 }
 
 /* Custom Scrollbar Style (Optional) */
@@ -1192,30 +1063,8 @@ body {
 }
 
 /* Ensure collapsed content is visible when 'in' */
-/* Keep the display block but allow flexbox within it */
 .collapse.in {
-    display: flex !important; /* Use flexbox for internal layout */
-    flex-direction: column; /* Stack contents vertically */
+    display: block !important;
     height: auto !important;
     visibility: visible !important;
-    flex-grow: 1; /* Allow the expanded section to grow */
-}
-
-/* Fix for potential Bootstrap column issues in some layouts */
-@media (min-width: 992px) { /* Apply for large devices and up (Bootstrap's lg breakpoint) */
-    .col-lg-5, .col-lg-7 {
-        /* Ensure columns behave as flex items within their row */
-        /* If the parent .row is display:flex, this might be redundant */
-        /* flex: 0 0 auto; width: auto; */
-    }
-    #main, #playlistrow {
-         display: flex; /* Make main and playlist rows flex containers */
-         flex-wrap: wrap; /* Allow columns to wrap if needed */
-         align-items: stretch; /* Make columns stretch to equal height */
-    }
-    #main > .col-lg-5, #main > .col-lg-7,
-    #playlistrow > .col-lg-5, #playlistrow > .col-lg-7 {
-         display: flex; /* Make columns flex containers themselves */
-         flex-direction: column; /* Stack content vertically within column */
-    }
 }
